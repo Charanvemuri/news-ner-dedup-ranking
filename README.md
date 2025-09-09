@@ -1,32 +1,40 @@
-# News NER + Dedup + Simple Ranking
+# 📰 News NER + Dedup + Ranking API
 
-This project extracts entities from news articles, embeds articles for semantic similarity,
-removes near-duplicates, and ranks remaining items by a basic relevance score.
+A lightweight **NLP pipeline and API** for processing news articles.  
+It extracts entities, removes near-duplicate articles, and ranks remaining items by relevance to a query.
 
-## Components
-- **NER:** Hugging Face pipeline (`dslim/bert-base-NER`) by default
-- **Embeddings:** SentenceTransformers (`all-MiniLM-L6-v2`)
+---
+
+## 🚀 Components
+- **NER:** Hugging Face `dslim/bert-base-NER`
+- **Embeddings:** SentenceTransformers `all-MiniLM-L6-v2`
 - **Deduplication:** Cosine similarity thresholding
-- **Ranking:** Simple BM25-like score + embedding similarity (toy example)
+- **Ranking:** Query embedding similarity
 
-## Quickstart
+---
+
+## ▶️ Quickstart
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python src/pipeline.py --input data/sample_news.csv --output out/results.csv
-```
 
-## API (optional)
-```bash
 uvicorn src.api:app --reload --port 8002
-```
 
-## Files
-- `data/sample_news.csv` - tiny sample dataset
-- `src/pipeline.py` - CLI to run NER, dedup, ranking
-- `src/api.py` - FastAPI to run pipeline in-memory
-- `requirements.txt` - dependencies
+curl -sS -X POST "http://127.0.0.1:8002/process" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"iphone","items":[{"title":"A","text":"Apple announced new iPhone with better cameras."}]}'
 
-## Notes
-- On first run, Transformers/SentenceTransformers will download models.
-- Adjust deduplication threshold in `pipeline.py` as needed (default 0.88).
+
+---
+
+### 🔄 Step 2 — Commit and push
+```bash
+git add README.md
+git commit -m "docs: polished README with API usage and highlights"
+git push
+
+git add README.md
+git commit -m "docs: polished README with API usage and highlights"
+git push
+
